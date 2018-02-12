@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Books to Move You</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="readinglist/images/img/appicon.ico" /> 
+  <link href="https://fonts.googleapis.com/css?family=Acme|Mukta+Malar" rel="stylesheet">
+  <link rel="stylesheet" href="http://ryanhunter.org/portfolio/libs/bootstrap/4.0.0/bootstrap.min.css">
+  <link rel="stylesheet" href="readinglist/readinglist.css">
+
+</head>
+<body>
+  <header>
+    <h3>Books to Grow Your Mind</h3>
+	<p>A collection of best selling self-development, science & technology, and business books to assist your growth & success this year.  Search & filter as needed.  A portfolio project built using Angular.js and Bootstrap 4.</p>
+  </header>
+  <main>
+  <!--- App --->
+	<div class="images_wrapper" data-ng-app="images" data-ng-controller="imagesController">
+
+	  <div class="filters">
+		<input type="text" data-ng-model="txtQuery" placeholder="Search">
+
+		<select onchange="filtered();" data-ng-model="showModes" data-ng-model-options="{debounce:325}">
+			<option value="" selected>All Categories</option>
+			<option data-ng-repeat="item in list | orderBy:'Category' | unique:'Category'" value="{{item.Category}}">{{item.Category}}</option>
+		</select>
+
+		<select onchange="filtered();" data-ng-model="showType" data-ng-model-options="{debounce:325}">
+			<option value="" selected>All Formats</option>
+			<option data-ng-repeat="item in list | orderBy:'Format' | unique:'Format'" value="{{item.Format}}">{{item.Format}}</option>
+		</select>
+	  </div>
+
+	  <ul id="images_grid">
+		<li data-ng-repeat="item in filtered = (list | orderBy:'Name' | filter:showModes | filter:showType | filter:txtQuery)">
+		  <a href="{{item.URL}}">
+		    <img data-ng-src="images/books/{{item.Image}}" alt="{{item.Name}}" style="height:50%;" class="img-rounded">
+		  </a> <br>
+		  <strong>{{item.Title}}</strong> by {{item.Author}}. <br>
+		  {{item.Pages}} Pages.  Price: {{item.Price | currency}}.  Rating {{item.StarRating}}  <br>
+		  Category: {{item.Category}}. Format: {{item.Format}} <br>
+		  <i>Published {{item.PubDate}}</i>. ISBN 10: {{item.ISBN10}}.<br>
+		  <strong>Synopsis:</strong> {{item.Synopsis}}<br>  
+		  <br>
+		</li>
+	  </ul>
+
+	  <p data-ng-show="filtered.length === 0"><span class="noData">Sorry!</span> <br>No data found for chosen criteria. <br>Please alter your search filters, and try again.<br>Data is updated on a monthly basis. Please check back soon.</p>
+	</div><!--/ images_wrapper -->
+  <!--/ App --->
+  </main>
+  
+
+
+  <!--/ JS files -->
+  <script src="http://ryanhunter.org/portfolio/libs/jquery.min_3.2.1.js"></script>
+  <script src="http://ryanhunter.org/portfolio/libs/popper.min.js"></script>
+  <script src="http://ryanhunter.org/portfolio/libs/bootstrap/4.0.0/bootstrap.min.js"></script>
+  <script src="http://ryanhunter.org/portfolio/libs/angularjs/1.6/angular.min.js"></script>
+  <script src="http://ryanhunter.org/portfolio/libs/angularjs/angular-filter.min.js"></script>
+  <script src="readinglist/readinglist.js"></script>
+</body>
+</html>
